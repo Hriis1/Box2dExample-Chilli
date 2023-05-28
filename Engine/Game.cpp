@@ -92,21 +92,22 @@ void Game::UpdateModel()
 	const float dt = ft.Mark();
 	world.Step( dt,8,3 );
 
-	bool shouldAdd = false;
-	float size = 0.0f;
-	std::unique_ptr<Box::ColorTrait> pColorTrait;
-	Vec2 pos;
-	float zzsize = 1.0f;
-	float angle = 0.0f;
-	Vec2 linVel = { 0.0f,0.0f };
-	float angVel = 0.0f;
+	while (!wnd.kbd.KeyIsEmpty())
+	{
+		auto e = wnd.kbd.ReadKey();
+		if (e.IsPress() && e.GetCode() == VK_SPACE)
+		{
+			auto children = boxPtrs.front()->Split(world);
+			boxPtrs.insert(boxPtrs.end(), std::make_move_iterator(children.begin()), std::make_move_iterator(children.end()));
+		}
+	}
+
 	for (auto it = boxPtrs.begin(); it != boxPtrs.end();)
 	{
 		if ((*it)->ShouldDestroy())
 		{
 			it = boxPtrs.erase(it);
 		}
-		
 		else
 		{
 			it++;

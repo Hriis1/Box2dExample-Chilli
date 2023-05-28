@@ -107,6 +107,8 @@ public:
 	{
 		return shouldSplit;
 	}
+
+	std::vector<std::unique_ptr<Box>> Split(b2World& world);
 private:
 	static void Init()
 	{
