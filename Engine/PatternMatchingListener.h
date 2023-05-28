@@ -59,13 +59,13 @@ public:
 	}
 	void BeginContact( b2Contact* contact ) override
 	{
-		const b2Body* bodyPtrs[] = { contact->GetFixtureA()->GetBody(),contact->GetFixtureB()->GetBody() };
+		b2Body* bodyPtrs[] = { contact->GetFixtureA()->GetBody(),contact->GetFixtureB()->GetBody() };
 		if( bodyPtrs[0]->GetType() == b2BodyType::b2_dynamicBody &&
 			bodyPtrs[1]->GetType() == b2BodyType::b2_dynamicBody )
 		{
 			Switch( 
-				*reinterpret_cast<Box*>(bodyPtrs[0]->GetUserData()),
-				*reinterpret_cast<Box*>(bodyPtrs[1]->GetUserData())
+				*reinterpret_cast<Box*>(bodyPtrs[0]->GetUserData().pointer),
+				*reinterpret_cast<Box*>(bodyPtrs[1]->GetUserData().pointer)
 			);
 		}
 	}
