@@ -50,7 +50,7 @@ public:
 			fixtureDef.restitution = 1.0f;
 			pBody->CreateFixture( &fixtureDef );
 		}
-		pBody->SetUserData( this );
+		pBody->GetUserData().pointer = reinterpret_cast<std::uintptr_t>(this);
 	}
 	void Draw( Pipeline<SolidEffect>& pepe ) const
 	{
