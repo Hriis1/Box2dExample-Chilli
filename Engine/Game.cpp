@@ -62,7 +62,7 @@ Game::Game( MainWindow& wnd )
 				OutputDebugStringA(msg.str().c_str());
 
 				//Check if the two colliding boxes have the same color
-				if (tid0 == tid1)
+				if (tid0 != tid1)
 				{
 					boxPtrs[0]->MarkForDeath();
 				}

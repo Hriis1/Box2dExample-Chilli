@@ -112,15 +112,16 @@ std::vector<std::unique_ptr<Box>> Box::Split(b2World& world)
 	const float angle = GetAngle();
 	const Vec2 vel = GetVelocity();
 	const float angVel = GetAngularVelocity();
-	const Vec2 base = (Vec2(0.5f, 0.5f) * size) *= Mat2::Rotation(angle);
+	// base for rotation to calculate centers of children relative to parent center
+	const Vec2 base = (Vec2{ 0.5f,0.5f } *size) *= Mat2::Rotation(angle);
 	for (int i = 0; i < 4; i++)
 	{
 		boxes.push_back(std::make_unique<Box>(
 			GetColorTrait().Clone(), world,
 			base * Mat2::Rotation((float)i * PI / 2.0f) + pos,
-			GetSize() / 2.0f, angle, vel, angVel));
+			GetSize() / 2.0f, angle, vel, angVel
+			));
 	}
-
 	MarkForDeath();
 	return boxes;
 }
