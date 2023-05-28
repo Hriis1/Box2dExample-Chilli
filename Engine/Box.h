@@ -67,6 +67,14 @@ public:
 	{
 		pBody->ApplyAngularImpulse( impulse,true );
 	}
+	void MarkForDeath()
+	{
+		shouldDestroy = true;
+	}
+	void MarkForSplitting()
+	{
+		shouldSplit = true;
+	}
 	float GetAngle() const
 	{
 		return pBody->GetAngle();
@@ -91,6 +99,14 @@ public:
 	{
 		return *pColorTrait;
 	}
+	bool ShouldDestroy() const
+	{
+		return shouldDestroy;
+	}
+	bool ShouldSplit() const
+	{
+		return shouldSplit;
+	}
 private:
 	static void Init()
 	{
@@ -105,4 +121,6 @@ private:
 	float size;
 	BodyPtr pBody;
 	std::unique_ptr<ColorTrait> pColorTrait;
+	bool shouldDestroy = false;
+	bool shouldSplit = false;
 };

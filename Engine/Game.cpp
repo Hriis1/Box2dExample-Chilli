@@ -59,7 +59,17 @@ Game::Game( MainWindow& wnd )
 
 				std::stringstream msg;
 				msg << "Collision between " << tid0.name() << " and " << tid1.name() << std::endl;
-				OutputDebugStringA( msg.str().c_str() );
+				OutputDebugStringA(msg.str().c_str());
+
+				//Check if the two colliding boxes have the same color
+				if (tid0 == tid1)
+				{
+					boxPtrs[0]->MarkForDeath();
+				}
+				else
+				{
+					boxPtrs[0]->MarkForSplitting();
+				}
 			}
 		}
 	};
@@ -77,8 +87,32 @@ void Game::Go()
 
 void Game::UpdateModel()
 {
+	
+
 	const float dt = ft.Mark();
 	world.Step( dt,8,3 );
+
+	bool shouldAdd = false;
+	float size = 0.0f;
+	std::unique_ptr<Box::ColorTrait> pColorTrait;
+	Vec2 pos;
+	float zzsize = 1.0f;
+	float angle = 0.0f;
+	Vec2 linVel = { 0.0f,0.0f };
+	float angVel = 0.0f;
+	for (auto it = boxPtrs.begin(); it != boxPtrs.end();)
+	{
+		if ((*it)->ShouldDestroy())
+		{
+			it = boxPtrs.erase(it);
+		}
+		
+		else
+		{
+			it++;
+		}
+	}
+	
 }
 
 void Game::ComposeFrame()
